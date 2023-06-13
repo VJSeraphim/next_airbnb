@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { IoMdClose } from 'react-icons/io'
+import Button from '../Button'
 
 interface ModalProps {
     isOpen?: boolean
@@ -73,7 +75,97 @@ const Modal: React.FC<ModalProps> = ({
                     bg-neutral-800/70
                 "
             >
-
+                <div
+                    className="
+                        relative
+                        w-full
+                        md:w-4/6
+                        lg:w-3/6
+                        xl:w-2/5
+                        my-6
+                        mx-auto
+                        h-full
+                        ld:h-auto
+                        md:h-auto
+                    "
+                >
+                    {/* CONTENT HERE */}
+                    <div
+                        className={`
+                            transition
+                            duration-300
+                            h-full
+                            ${showModal ? 'translate-y-0' : 'translate-y-full'}
+                            ${showModal ? 'opacity-100' : 'opacity-0'}
+                        `}
+                    >
+                        <div
+                            className="
+                                translate
+                                h-full
+                                lg:h-auto
+                                md:h-auto
+                                border-0
+                                rounded-lg
+                                relative
+                                flex
+                                flex-col
+                                w-full
+                                bg-white
+                                outline-none
+                                focus:outline-none
+                            "
+                        >
+                            {/* HEADER HERE */}
+                            <div
+                                className="
+                                    flex
+                                    items-center
+                                    justify-cetner
+                                    relative
+                                    border-b-[1px]
+                                    p-6
+                                    rounded-t
+                                "
+                            >
+                                <button
+                                    className="
+                                        p-1
+                                        border-0
+                                        hover:opacity-70
+                                        transition
+                                        absolute
+                                        left-0
+                                    "
+                                    onClick={handleClose}
+                                >
+                                    <IoMdClose size={18}/>
+                                </button>
+                                <div className="text-lg font-semibold">
+                                    Login Modal {title}
+                                </div>
+                            </div>
+                            {/* BODY HERE */}
+                            <div className="relative p-6 flex-auto">
+                                {body}
+                            </div>
+                            {/* FOOTER HERE */}
+                            <div className="flex flex-col p-6 gap-2">
+                                <div 
+                                    className="
+                                        flex
+                                        flex-row
+                                        items-center
+                                        gap-4
+                                        w-full
+                                    "
+                                >
+                                    <Button label="MyButton" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </>
     )
