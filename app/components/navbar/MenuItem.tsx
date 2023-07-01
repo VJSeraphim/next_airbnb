@@ -19,7 +19,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
                 font-semibold
             "
         >
-            MenuItem
+            {label}
         </div>
     )
 }
