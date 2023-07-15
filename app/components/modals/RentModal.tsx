@@ -1,15 +1,16 @@
 'use client'
 
 import { useMemo, useState } from "react"
+import { useForm, FieldValues } from "react-hook-form"
 
 import useRentModal from "@/app/hooks/useRentModal"
-import Modal from "./Modal"
-import Heading from "../Heading"
 import { categories } from "../navbar/Categories"
 import CategoryInput from "../inputs/CategoryInput"
-import { useForm, FieldValues } from "react-hook-form"
 import CountrySelect from "../inputs/CountrySelect"
 
+import Modal from "./Modal"
+import Heading from "../Heading"
+import Map from "../Map"
 
 enum STEPS {
     CATEGORY = 0,
@@ -49,6 +50,7 @@ const RentModal = () => {
     })
 
     const category = watch('category')
+    const location = watch('location')
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -120,7 +122,11 @@ const RentModal = () => {
                     subtitle="Help guests find you!"
                 />
                 <CountrySelect 
-
+                    value={location}
+                    onChange={(val) => setCustomValue('location', val)}
+                />
+                <Map 
+                    
                 />
             </div>
         )
