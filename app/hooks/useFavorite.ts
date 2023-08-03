@@ -46,6 +46,19 @@ const useFavorite = ({
         } catch (error) {
             toast.error('Oops... Something went wrong!')            
         }
-    },[])
+    },[
+        currentUser,
+        hasFavorited,
+        listingId,
+        loginModal,
+        router
+    ])
+
+    return {
+        hasFavorited,
+        toggleFavorite
+    }
     
 }
+
+export default useFavorite
