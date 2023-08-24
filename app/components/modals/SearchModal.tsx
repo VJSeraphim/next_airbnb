@@ -5,11 +5,13 @@ import { useCallback, useMemo, useState } from 'react'
 import Modal from './Modal'
 import { Range } from 'react-date-range'
 import dynamic from 'next/dynamic'
-
-import { CountrySelectValue } from '../inputs/CountrySelect'
-import useSearchModal from '@/app/hooks/useSearchModal'
 import qs from 'query-string'
 import { formatISO } from 'date-fns'
+
+import CountrySelect, { CountrySelectValue } from '../inputs/CountrySelect'
+import useSearchModal from '@/app/hooks/useSearchModal'
+
+import Heading from '../Heading'
 
 enum STEPS {
     LOCATION = 0,
@@ -73,7 +75,58 @@ const SearchModal = () => {
         if(dateRange.endDate) {
             updatedQuery.endDate = formatISO(dateRange.endDate)
         }
+
+        const url = qs.stringifyUrl({
+            url: '/',
+            query: updatedQuery
+        }, { skipNull: true })
+
+        setStep(STEPS.LOCATION)
+        searchModal.onClose()
+        router.push(url)
+    }, [
+        step,
+        searchModal,
+        location,
+        router,
+        guestCount,
+        roomCount,
+        bathroomCount,
+        dateRange,
+        onNext,
+        params
+    ])
+
+    const actionLabel = useMemo(() => {
+        if(step === STEPS.INFO) {
+            return 'search'
+        }
+
+        return 'Next'
+    }, [step])
+
+    const secondaryActionLabel = useMemo(() => {
+        if (step === STEPS.LOCATION) {
+            return undefined
+        }
+
+        return 'Back'
     }, [])
+
+    let bodyContent = (
+        <div className="flex flex-col gap-8">
+            <Heading 
+                title="Where's on your mind?"
+                subtitle="Find some places for you."
+            />
+            <CountrySelect 
+                value={location}
+                onChange={(val) => setLocation(val as CountrySelectValue)}
+            />
+            <hr />
+            <Map center={location?.latlng} />
+        </div>
+    )
 
     return (
         <Modal 
@@ -82,6 +135,7 @@ const SearchModal = () => {
             onSubmit={searchModal.onOpen}
             title="Filters"
             actionLabel='Search'
+            body={bodyContent}
         />  
     )
 }
